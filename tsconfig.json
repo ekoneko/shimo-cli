@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "lib": ["es2015", "dom", "dom.iterable", "scripthost"],
+    "outDir": "lib",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "esnext"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/@types/node"]
+}
