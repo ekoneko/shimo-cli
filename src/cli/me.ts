@@ -4,7 +4,7 @@ import { format } from "../utils/format";
 import * as user from "../user";
 
 export const name = ["me", "default"];
-export const description = "";
+export const description = "Display current user info";
 export const command = async (cli: Result) => {
   const userInfo = await user.info();
   const key = cli.input[1];

@@ -3,7 +3,7 @@ import * as cliParser from "../utils/cliParser";
 import * as user from "../user";
 
 export const name = "login";
-export const description = "";
+export const description = "login with email/mobile and password";
 export const command = async (cli: Result) => {
   try {
     const { username, password } = await cliParser.parseAuthInfo(cli);

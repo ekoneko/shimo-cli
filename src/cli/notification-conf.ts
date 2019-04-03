@@ -3,7 +3,7 @@ import * as notification from "../notification";
 import { format } from "../utils/format";
 
 export const name = ["notification", "conf"];
-export const description = "";
+export const description = "set or list notification config";
 export const command = async (cli: Result) => {
   const subCommand = cli.input[2].toLocaleLowerCase();
   switch (subCommand) {

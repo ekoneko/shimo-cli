@@ -11,9 +11,14 @@ interface CommandMap {
 
 const commandMap: CommandMap = {};
 
+function formatNameInDescription(name: string | string[]) {
+  if (typeof name === "string") return name;
+  return name.filter((name) => name !== "default").join(" ");
+}
+
 const description: string[] = [];
 cliTasks.forEach((task) => {
-  description.unshift(task.description);
+  description.push(`${formatNameInDescription(task.name)}\n\t${task.description}`);
   if (process.env.NODE_ENV === "development" && get(commandMap, task.name)) {
     throw new Error(`Don't over write cli name(${task.name}).`);
   }
@@ -32,7 +37,9 @@ const cli = meow(description.join("\n\n"), {
 function lookup(commandMap: CommandMap, cli: meow.Result, inputIndex: number = 0) {
   const input = cli.input[inputIndex] || "default";
   if (!commandMap[input]) {
-    process.stdout.write("Unknown commend\n");
+    if (cli.input.length > 1) {
+      process.stdout.write("Unknown commend\n");
+    }
     cli.showHelp();
   } else if (typeof commandMap[input] === "function") {
     try {
