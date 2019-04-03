@@ -7,11 +7,13 @@
 
 import * as querystring from "querystring";
 import { notify } from "node-notifier";
+import { assign } from "lodash";
 import { NOTIFICATION_TYPES } from "./consts/notification";
 import { getFileUrl } from "./utils/url";
 import { request } from "./utils/request";
 import { User, File } from "./types";
-const open = require("open");
+import { readConf, writeConf, getConfPath } from "./utils/userData";
+import { spawnEditorProcess } from "./utils/editor";
 
 export interface NotificationData {
   id: number;
@@ -41,6 +43,7 @@ interface NotificationDetail {
     user?: User;
     file?: File;
     fileType?: number;
+    type?: number;
     fileName?: string;
     selectionGuid?: string;
   }; // TODO
@@ -49,7 +52,6 @@ interface NotificationDetail {
 }
 
 function format(detail: NotificationDetail, data: NotificationData): NotifyInfo | undefined {
-  // console.log(detail, data);
   switch (detail.notification.targetType) {
     // 评论
     case NOTIFICATION_TYPES.COMMENT: {
@@ -57,8 +59,10 @@ function format(detail: NotificationDetail, data: NotificationData): NotifyInfo 
         message: `${detail.notification.user!.name} 评论了「${detail.notification.file!.name}」`,
         icon: `${detail.notification.user!.avatar}`,
         url:
-          getFileUrl(detail.notification.fileType!.toString(), detail.notification.file!.guid) +
-          (detail.notification.selectionGuid ? `#${detail.notification.selectionGuid}` : ""),
+          getFileUrl(
+            (detail.notification.fileType || detail.notification.type)!.toString(),
+            detail.notification.file!.guid,
+          ) + (detail.notification.selectionGuid ? `#${detail.notification.selectionGuid}` : ""),
       };
     }
     // 提及
@@ -67,8 +71,10 @@ function format(detail: NotificationDetail, data: NotificationData): NotifyInfo 
         message: `${detail.notification.user!.name} ${detail.notification.msg}`,
         icon: `${detail.notification.user!.avatar}`,
         url:
-          getFileUrl(detail.notification.fileType!.toString(), detail.notification.file!.guid) +
-          (detail.notification.selectionGuid ? `#${detail.notification.selectionGuid}` : ""),
+          getFileUrl(
+            (detail.notification.fileType || detail.notification.type)!.toString(),
+            detail.notification.file!.guid,
+          ) + (detail.notification.selectionGuid ? `#${detail.notification.selectionGuid}` : ""),
       };
     // 添加协作者
     case NOTIFICATION_TYPES.TEAMWORK:
@@ -133,31 +139,55 @@ async function requestNotifications(limit: number) {
   return data;
 }
 
-export function watch(socket: SocketIOClient.Socket) {
+export async function watch(socket: SocketIOClient.Socket) {
+  const conf = await getConf();
   socket.on("Notification", async ({ data }: any) => {
     const detail = await getNotificationDetail(data.target_id);
     if (detail) {
+      if (!conf.enableTypes.includes(detail.notification.targetType)) {
+        return;
+      }
       const notifiedInfo = format(detail, data);
       notifiedInfo &&
-        notify(
-          {
-            title: notifiedInfo.title,
-            message: notifiedInfo.message,
-            icon: notifiedInfo.icon,
-            actions: ["open", "close"],
-          },
-          (err, res, meta) => {
-            if (
-              notifiedInfo.url &&
-              res === "activate" &&
-              meta &&
-              meta.activationValue !== "close"
-            ) {
-              open(notifiedInfo.url);
-            }
-          },
-        );
+        notify({
+          title: notifiedInfo.title,
+          message: notifiedInfo.message,
+          icon: notifiedInfo.icon,
+          open: notifiedInfo.url,
+          timeout: conf.timeout,
+        });
     }
   });
   process.stdout.write("Watching...");
+}
+
+interface NotificationConf {
+  enableTypes: Array<NOTIFICATION_TYPES>;
+  timeout: number;
+}
+
+const defaultConfig: NotificationConf = {
+  enableTypes: [1, 2],
+  timeout: 5,
+};
+
+const NOTIFICATION_CONF_NAME = "notification";
+
+async function initConf() {
+  await writeConf(NOTIFICATION_CONF_NAME, JSON.stringify(defaultConfig, undefined, 2));
+}
+
+export async function setConf() {
+  const config = await readConf(NOTIFICATION_CONF_NAME);
+  if (!config) {
+    initConf();
+  }
+  const confPath = getConfPath(NOTIFICATION_CONF_NAME);
+  await spawnEditorProcess(confPath);
+}
+
+export async function getConf() {
+  const result: Partial<NotificationConf> = (await readConf(NOTIFICATION_CONF_NAME)) || {};
+  assign(result, defaultConfig);
+  return result as NotificationConf;
 }

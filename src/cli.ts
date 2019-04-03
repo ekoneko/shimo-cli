@@ -32,9 +32,14 @@ const cli = meow(description.join("\n\n"), {
 function lookup(commandMap: CommandMap, cli: meow.Result, inputIndex: number = 0) {
   const input = cli.input[inputIndex] || "default";
   if (!commandMap[input]) {
+    process.stdout.write("Unknown commend\n");
     cli.showHelp();
   } else if (typeof commandMap[input] === "function") {
-    commandMap[input](cli);
+    try {
+      commandMap[input](cli);
+    } catch (err) {
+      console.error(err);
+    }
   } else {
     lookup((commandMap[input] as any) as CommandMap, cli, inputIndex + 1);
   }

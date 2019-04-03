@@ -7,5 +7,10 @@ export const description = "";
 export const command = async (cli: Result) => {
   const socket = new Socket();
   const client = socket.client;
-  notification.watch(client);
+  try {
+    await notification.watch(client);
+  } catch (err) {
+    client.close();
+    throw err;
+  }
 };

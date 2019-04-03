@@ -16,6 +16,13 @@ function formatText(data: any, level = 0) {
     result += `${paddingLeft}\n`;
   } else if (typeof data !== "object") {
     result += paddingLeft + data;
+  } else if (data instanceof Array) {
+    result += data
+      .reduce((pre, cur, index) => {
+        pre[index] = `${paddingLeft}${formatText(cur, level)}`;
+        return pre;
+      }, [])
+      .join("\n");
   } else {
     for (const [k, v] of toPairs(data)) {
       if (!v || typeof v !== "object") {
