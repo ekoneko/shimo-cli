@@ -14,8 +14,10 @@ It works both on cli and other clients(as node_modules).
 
 - [x] Search File
 
-- [ ] Create / Delete File
+- [x] Create / Delete File
 
-- [ ] Import words, excel, xmind, etc
+- [ ] Import words, excel, etc
+
+- [ ] Export file from shimo to disk
 
 - [ ] Friendly output

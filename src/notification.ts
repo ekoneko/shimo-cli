@@ -13,7 +13,7 @@ import { getFileUrl } from "./utils/url";
 import { request } from "./utils/request";
 import { User, File } from "./types";
 import { readConf, writeConf, getConfPath } from "./utils/userData";
-import { spawnEditorProcess } from "./utils/editor";
+import { editFile } from "./utils/editor";
 
 export interface NotificationData {
   id: number;
@@ -149,7 +149,11 @@ export async function watch(socket: SocketIOClient.Socket) {
       const notifiedInfo = format(detail, data);
       if (notifiedInfo) {
         process.stdout.write(
-          (notifiedInfo.title ? `${notifiedInfo.title}: ` : "") + notifiedInfo.message + "\n",
+          (notifiedInfo.title ? `${notifiedInfo.title}: ` : "") +
+            notifiedInfo.message +
+            "\t" +
+            notifiedInfo.url +
+            "\n",
         );
         notify({
           title: notifiedInfo.title,
@@ -186,7 +190,7 @@ export async function setConf() {
     initConf();
   }
   const confPath = getConfPath(NOTIFICATION_CONF_NAME);
-  await spawnEditorProcess(confPath);
+  await editFile(confPath);
 }
 
 export async function getConf() {

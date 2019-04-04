@@ -23,3 +23,13 @@ export function parseLimit(cli: Result, defaultValue: number, max: number, min =
 export function parseFrom(cli: Result) {
   return cli.flags.from;
 }
+
+export function parseFolder(cli: Result) {
+  if (typeof cli.flags.folder !== "string") {
+    return "0";
+  }
+  if (cli.flags.folder.match(/\w{16}/)) {
+    return cli.flags.folder;
+  }
+  throw new Error("Folder is not a guid");
+}

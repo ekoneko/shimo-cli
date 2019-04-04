@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { debug } from "util";
+import { v1 } from "uuid";
 
 export function getUserData() {
   if (path.isAbsolute(process.env.USER_DATA!)) {
@@ -44,4 +45,10 @@ export function writeConf(name: string, content: string) {
 export function getConfPath(name: string) {
   const userData = getUserData();
   return path.join(userData, name);
+}
+
+export function getATempFilePath() {
+  const userData = getUserData();
+  const prefix = ".tmp";
+  return path.join(userData, prefix + v1());
 }

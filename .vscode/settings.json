@@ -1,4 +1,15 @@
 {
-  "cSpell.words": ["wechat", "dingtalk", "guid", "shimo", "docx", "mindmap", "mindmaps", "oneline"],
+  "cSpell.words": [
+    "wechat",
+    "dingtalk",
+    "guid",
+    "shimo",
+    "docx",
+    "mindmap",
+    "mindmaps",
+    "oneline",
+    "guid",
+    "guids"
+  ],
   "editor.formatOnSave": true
 }
