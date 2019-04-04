@@ -1,4 +1,4 @@
-import fetch, { BodyInit } from "node-fetch";
+import fetch, { BodyInit, Request } from "node-fetch";
 import { getUserToken } from "./userData";
 
 interface Headers {
@@ -13,10 +13,10 @@ interface RequestOptions {
 }
 
 export const defaultHeaders: Headers = {
-  Accept: "application/vnd.shimo.v2+json",
-  "Cache-Control": "no-cache",
-  "User-Agent": "SOS/1.3.28",
-  "Content-Type": "application/json",
+  accept: "application/vnd.shimo.v2+json",
+  "cache-control": "no-cache",
+  "user-agent": "SOS/1.3.28",
+  "content-type": "application/json",
 };
 
 export async function request(options: RequestOptions, withToken = true) {

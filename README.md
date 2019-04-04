@@ -16,7 +16,7 @@ It works both on cli and other clients(as node_modules).
 
 - [x] Create / Delete File
 
-- [ ] Import words, excel, etc
+- [x] Import words, excel, etc
 
 - [ ] Export file from shimo to disk
 

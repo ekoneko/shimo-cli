@@ -6,6 +6,7 @@
   "bin": "./cli.js",
   "dependencies": {
     "dotenv": "^7.0.0",
+    "form-data": "^2.3.3",
     "lodash": "^4.17.11",
     "meow": "^5.0.0",
     "node-fetch": "^2.3.0",
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.0",
+    "@types/form-data": "^2.2.1",
     "@types/lodash": "^4.14.123",
     "@types/meow": "^5.0.0",
     "@types/node-fetch": "^2.1.7",

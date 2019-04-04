@@ -9,7 +9,8 @@
     "mindmaps",
     "oneline",
     "guid",
-    "guids"
+    "guids",
+    "multipart"
   ],
   "editor.formatOnSave": true
 }

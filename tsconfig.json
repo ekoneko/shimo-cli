@@ -4,7 +4,7 @@
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "lib": ["esnext"],
     "outDir": "lib",
     "module": "commonjs",
     "moduleResolution": "node",

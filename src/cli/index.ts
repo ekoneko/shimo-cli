@@ -7,6 +7,7 @@ import * as search from "./search";
 import * as open from "./open";
 import * as fileCreate from "./file-create";
 import * as fileDelete from "./file-delete";
+import * as importFile from "./import";
 
 // Order for compose help text
 export default [
@@ -19,4 +20,5 @@ export default [
   search,
   fileCreate,
   fileDelete,
+  importFile,
 ];
