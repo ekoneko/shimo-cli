@@ -12,7 +12,7 @@ It works both on cli and other clients(as node_modules).
 
 - [x] File List (Dashboard / Desktop / Favorites / Shortcuts etc)
 
-- [ ] Search File
+- [x] Search File
 
 - [ ] Create / Delete File
 

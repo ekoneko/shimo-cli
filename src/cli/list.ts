@@ -1,5 +1,5 @@
 import { Result } from "meow";
-import { pick, camelCase } from "lodash";
+import { pick } from "lodash";
 import {
   getFileList,
   getUpdated,
@@ -11,6 +11,7 @@ import {
   getTrash,
 } from "../list";
 import { format } from "../utils/format";
+import { parseLimit, parseFrom } from "../utils/cliParser";
 
 const DEFAULT_FIELDS = ["guid", "name", "createdAt", "updatedAt", "user.name"];
 // other fields:  "user", "updatedUser", "type"
@@ -18,25 +19,18 @@ const DEFAULT_FIELDS = ["guid", "name", "createdAt", "updatedAt", "user.name"];
 const MAX_LIMIT = 150;
 const DEFAULT_LIMIT = 20;
 
-function getLimit(cli: Result) {
-  const limit = parseInt(cli.flags.limit, 10) || DEFAULT_LIMIT;
-  return Math.max(1, Math.min(MAX_LIMIT, limit));
-}
-
-function getFrom(cli: Result) {
-  return cli.flags.from;
-}
-
 async function getFiles(category: string, cli: Result) {
+  const limit = parseLimit(cli, DEFAULT_LIMIT, MAX_LIMIT, 1);
+  const from = parseFrom(cli);
   switch (category) {
     case "updated":
-      return getUpdated(getLimit(cli), getFrom(cli));
+      return getUpdated(limit, from);
     case "used":
-      return getUsed(getLimit(cli), getFrom(cli));
+      return getUsed(limit, from);
     case "created":
-      return getCreated(getLimit(cli), getFrom(cli));
+      return getCreated(limit, from);
     case "shared":
-      return getShared(getLimit(cli), getFrom(cli));
+      return getShared(limit, from);
     case "starred":
       return getStarred();
     case "shortcuts":

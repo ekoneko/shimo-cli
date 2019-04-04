@@ -3,6 +3,7 @@ import * as me from "./me";
 import * as notificationConf from "./notification-conf";
 import * as notificationWatch from "./notification-watch";
 import * as list from "./list";
+import * as search from "./search";
 
 // Order for compose help text
-export default [login, me, notificationConf, notificationWatch, list];
+export default [login, me, notificationConf, notificationWatch, list, search];
