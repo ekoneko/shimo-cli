@@ -10,10 +10,12 @@ It works both on cli and other clients(as node_modules).
 
 - [x] Watch Notification
 
-- [ ] File List (Dashboard / Desktop / Favorites / Shortcuts etc)
+- [x] File List (Dashboard / Desktop / Favorites / Shortcuts etc)
 
 - [ ] Search File
 
 - [ ] Create / Delete File
 
 - [ ] Import words, excel, xmind, etc
+
+- [ ] Friendly output

@@ -38,7 +38,7 @@ function lookup(commandMap: CommandMap, cli: meow.Result, inputIndex: number = 0
   const input = cli.input[inputIndex] || "default";
   if (!commandMap[input]) {
     if (cli.input.length > 1) {
-      process.stdout.write("Unknown commend\n");
+      process.stdout.write("Unknown command\n");
     }
     cli.showHelp();
   } else if (typeof commandMap[input] === "function") {

@@ -8,12 +8,12 @@ export const command = async (cli: Result) => {
   try {
     const { username, password } = await cliParser.parseAuthInfo(cli);
     if (!username || !password) {
-      process.stderr.write("Miss username or password");
+      process.stderr.write("Missing username or password\n");
       process.exit();
     }
     await user.loginWithPassword(username, password);
-    process.stdout.write("success");
+    process.stdout.write("success\n");
   } catch (err) {
-    process.stderr.write(err.message || "login failed");
+    process.stderr.write((err.message || "login failed") + "\n");
   }
 };

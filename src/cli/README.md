@@ -1,4 +1,4 @@
-# CLI commend
+# CLI command
 
 ## Fields
 

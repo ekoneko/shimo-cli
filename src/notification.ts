@@ -103,7 +103,6 @@ function format(detail: NotificationDetail, data: NotificationData): NotifyInfo 
       };
     case NOTIFICATION_TYPES.SYSTEM:
       return {
-        title: "系统通知",
         message: `${detail.notification.msg}`,
         url: `${data.link}`,
       };
@@ -148,7 +147,10 @@ export async function watch(socket: SocketIOClient.Socket) {
         return;
       }
       const notifiedInfo = format(detail, data);
-      notifiedInfo &&
+      if (notifiedInfo) {
+        process.stdout.write(
+          (notifiedInfo.title ? `${notifiedInfo.title}: ` : "") + notifiedInfo.message + "\n",
+        );
         notify({
           title: notifiedInfo.title,
           message: notifiedInfo.message,
@@ -156,9 +158,10 @@ export async function watch(socket: SocketIOClient.Socket) {
           open: notifiedInfo.url,
           timeout: conf.timeout,
         });
+      }
     }
   });
-  process.stdout.write("Watching...");
+  process.stdout.write("Watching...\n");
 }
 
 interface NotificationConf {

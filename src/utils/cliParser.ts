@@ -49,7 +49,7 @@ async function askInput(label: string, hiddenInput = false) {
 }
 
 export async function parseAuthInfo(cli: Result): Promise<AuthInfo> {
-  const username = cli.input[1] ? cli.input[1] : await askInput("Input email or mobile number:");
+  const username = cli.input[1] ? cli.input[1] : await askInput("Input Email or Mobile number:");
   const password = cli.input[2] ? cli.input[2] : await askInput("Input Password:", true);
   return {
     username: username.trim(),
