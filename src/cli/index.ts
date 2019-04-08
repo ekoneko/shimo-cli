@@ -8,6 +8,7 @@ import * as open from "./open";
 import * as fileCreate from "./file-create";
 import * as fileDelete from "./file-delete";
 import * as importFile from "./import";
+import * as exportFile from "./export";
 
 // Order for compose help text
 export default [
@@ -21,4 +22,5 @@ export default [
   fileCreate,
   fileDelete,
   importFile,
+  exportFile,
 ];

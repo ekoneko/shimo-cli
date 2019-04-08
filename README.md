@@ -18,6 +18,6 @@ It works both on cli and other clients(as node_modules).
 
 - [x] Import words, excel, etc
 
-- [ ] Export file from shimo to disk
+- [x] Export file from shimo to disk
 
 - [ ] Friendly output

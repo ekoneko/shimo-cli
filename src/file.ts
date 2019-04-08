@@ -1,3 +1,4 @@
+import * as qs from "querystring";
 import { request } from "./utils/request";
 import { File } from "./types";
 
@@ -39,6 +40,42 @@ export async function deleteFile(guid: string) {
     method: "DELETE",
   });
   if (!res.ok) {
+    throw new Error(`Request failed ${res.status} ${res.statusText}`);
+  }
+}
+
+export async function getFileInfo(guid: string) {
+  const url = `${process.env.API_URL}/files/${guid}`;
+  const res = await request({
+    url,
+    method: "GET",
+  });
+  if (res.ok) {
+    const result: File = await res.json();
+    return result;
+  } else {
+    throw new Error(`Request failed ${res.status} ${res.statusText}`);
+  }
+}
+
+export async function exportFile(guid: string, type: string, name: string) {
+  const url = `${process.env.API_URL}/files/${guid}/export`;
+  const params = qs.stringify({
+    file: guid,
+    type,
+    returnJson: 1,
+    name: name,
+  });
+  const res = await request({
+    url: `${url}?${params}`,
+    method: "GET",
+  });
+  if (res.ok) {
+    const result: {
+      redirectUrl: string;
+    } = await res.json();
+    return result.redirectUrl;
+  } else {
     throw new Error(`Request failed ${res.status} ${res.statusText}`);
   }
 }
