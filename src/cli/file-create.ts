@@ -5,7 +5,12 @@ import { parseFolder } from "../utils/cliParser";
 import { getContentFromEditor } from "../utils/editor";
 
 export const name = ["file", "create"];
-export const description = "Display current user info";
+export const description = [
+  "create a file",
+  "shimo-cli file create $name",
+  "--folder $guid",
+  "--content if set this flag, it will call your default editor to input content(raw delta string)",
+].join("\n\t");
 export const command = async (cli: Result) => {
   const type = cli.flags.type;
   const name = cli.input[2];

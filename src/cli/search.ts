@@ -10,7 +10,13 @@ const MAX_LIMIT = 50;
 const DEFAULT_FIELDS = ["guid", "name", "createdAt", "updatedAt", "user.name"];
 
 export const name = ["search"];
-export const description = "search file";
+export const description = [
+  "search file",
+  "shimo-cli search $keyword",
+  "--format\tdisplay format",
+  "--fields\tfields filter, split by comma",
+  "--limit \tset return line count",
+].join("\n\t");
 export const command = async (cli: Result) => {
   const keywords = cli.input[1];
   const limit = parseLimit(cli, DEFAULT_LIMIT, MAX_LIMIT);

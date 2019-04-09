@@ -2,7 +2,10 @@ import { Result } from "meow";
 const open = require("open");
 
 export const name = ["open"];
-export const description = "Display current user info";
+export const description = [
+  "open shimo homepage or file page in browser",
+  "shimo-cli open [guid]",
+].join("\n\t");
 export const command = async (cli: Result) => {
   open(getPage(cli.input[1]));
 };

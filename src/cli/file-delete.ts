@@ -2,7 +2,7 @@ import { Result } from "meow";
 import { deleteFile } from "../file";
 
 export const name = ["file", "delete"];
-export const description = "Delete selected files";
+export const description = ["Delete selected file", "shimo-cli file delete $guid"].join("\n\t");
 
 async function removeMultipleFile(guids: string[]) {
   const tasks: string[][] = [];

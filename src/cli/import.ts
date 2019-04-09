@@ -4,7 +4,9 @@ import { importFile } from "../import";
 import { parseFolder } from "../utils/cliParser";
 
 export const name = ["import"];
-export const description = "Import a file";
+export const description = ["Import a file", "shimo-cli import $filePath", "--folder $guid"].join(
+  "\n\t",
+);
 export const command = async (cli: Result) => {
   const filePath = cli.input[1];
   const folder = parseFolder(cli);

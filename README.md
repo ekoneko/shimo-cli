@@ -2,7 +2,7 @@
 
 A cli tool for shimo api.
 
-It works both on cli and other clients(as node_modules).
+It works both on cli and other clients(as node modules).
 
 ## Features
 
@@ -21,3 +21,5 @@ It works both on cli and other clients(as node_modules).
 - [x] Export file from shimo to disk
 
 - [ ] Friendly output
+
+- [ ] Use as npm module

@@ -43,7 +43,13 @@ async function getFiles(category: string, cli: Result) {
 }
 
 export const name = ["list"];
-export const description = "display file list from desktop or folder";
+export const description = [
+  "display file list from desktop or folder",
+  "shimo-cli list [desktop|updated|used|created|shared|starred|shortcuts|trash|$guid]",
+  "--format\tdisplay format",
+  "--fields\tfields filter, split by comma",
+  "--limit \tset return line count",
+].join("\n\t");
 export const command = async (cli: Result) => {
   const files = await getFiles(cli.input[1], cli);
   const fields: string[] = cli.flags.fields

@@ -40,7 +40,8 @@ function lookup(commandMap: CommandMap, cli: meow.Result, inputIndex: number = 0
     if (cli.input.length > 1) {
       process.stdout.write("Unknown command\n");
     }
-    cli.showHelp();
+    // default code is 2, it will case npm throw an exception
+    cli.showHelp(0);
   } else if (typeof commandMap[input] === "function") {
     try {
       commandMap[input](cli);

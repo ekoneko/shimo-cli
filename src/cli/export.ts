@@ -6,7 +6,11 @@ import { exportFile } from "../file";
 import { clearLine } from "../utils/input";
 
 export const name = ["export"];
-export const description = "Export a file to disk, only support doc* now";
+export const description = [
+  "Export a file to disk",
+  "shimo-cli export $guid $localPath",
+  "--type export as docx|pdf|jpg|md default is docx",
+].join("\n\t");
 
 const allowedTypes = ["docx", "pdf", "jpg", "md"];
 

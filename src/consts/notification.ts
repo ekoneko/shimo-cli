@@ -1,9 +1,9 @@
 export enum NOTIFICATION_TYPES {
   // 评论
   COMMENT = 0,
-  // 提到了你
+  // 提到或添加协作者
   MENTION = 1,
-  // 添加协作者
+  // 协作文件中评论
   TEAMWORK = 2,
   // "团队通知"
   TEAM = 3,

@@ -42,6 +42,7 @@ interface NotificationDetail {
     msg: string;
     user?: User;
     file?: File;
+    fileGuid?: string;
     fileType?: number;
     type?: number;
     fileName?: string;
@@ -73,7 +74,9 @@ function format(detail: NotificationDetail, data: NotificationData): NotifyInfo 
         url:
           getFileUrl(
             (detail.notification.fileType || detail.notification.type)!.toString(),
-            detail.notification.file!.guid,
+            detail.notification.file
+              ? detail.notification.file.guid
+              : detail.notification.fileGuid || "",
           ) + (detail.notification.selectionGuid ? `#${detail.notification.selectionGuid}` : ""),
       };
     // 添加协作者
@@ -149,10 +152,13 @@ export async function watch(socket: SocketIOClient.Socket) {
       const notifiedInfo = format(detail, data);
       if (notifiedInfo) {
         process.stdout.write(
-          (notifiedInfo.title ? `${notifiedInfo.title}: ` : "") +
+          new Date().toString() +
+            "\t" +
+            (notifiedInfo.title ? `${notifiedInfo.title}: ` : "") +
             notifiedInfo.message +
             "\t" +
             notifiedInfo.url +
+            `\t(${detail.notification.targetType})` +
             "\n",
         );
         notify({
