@@ -2,8 +2,10 @@
   "name": "shimo-cli",
   "version": "1.0.0",
   "description": "A cli tool for shimo api.",
-  "main": "index.js",
-  "bin": "./cli.js",
+  "main": "./lib/index.js",
+  "bin": {
+    "shimo-cli": "./cli.js"
+  },
   "dependencies": {
     "dotenv": "^7.0.0",
     "download": "^7.1.0",
@@ -31,9 +33,14 @@
     "typescript": "^3.3.4000"
   },
   "scripts": {
+    "start": "npm run start-cli",
     "start-cli": "npx ts-node src/cli.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
+  "files": [
+    "lib",
+    "cli.js"
+  ],
   "keywords": [],
   "author": "",
   "license": "UNLICENSED"
