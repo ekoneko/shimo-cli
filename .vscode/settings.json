@@ -10,7 +10,9 @@
     "oneline",
     "guid",
     "guids",
-    "multipart"
+    "multipart",
+    "shimocli",
+    "shimoclirc"
   ],
   "editor.formatOnSave": true
 }

@@ -4,6 +4,17 @@ A cli tool for [shimo](https://shimo.im)
 
 It works both on cli and other clients(as node modules).
 
+## How to use
+
+Before use `shimo-cli`, you should get `APP_CLIENT_ID` and `APP_CLIENT_SECRET` first.
+
+```shell
+npm i -g shimo-cli
+shimo-cli # initialize config at first running
+shimo-cli login
+shimo-cli me
+```
+
 ## Features
 
 - [x] Auth and keep user status
@@ -19,6 +30,10 @@ It works both on cli and other clients(as node modules).
 - [x] Import words, excel, etc
 
 - [x] Export file from shimo to disk
+
+- [x] initialize config
+
+- [ ] Friendly tip if no auth
 
 - [ ] Friendly output
 

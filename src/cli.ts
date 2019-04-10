@@ -3,8 +3,6 @@ import { config } from "./config";
 import cliTasks from "./cli/index";
 import { get, set } from "lodash";
 
-config();
-
 interface CommandMap {
   [key: string]: (cli: meow.Result) => void | CommandMap;
 }
@@ -53,4 +51,7 @@ function lookup(commandMap: CommandMap, cli: meow.Result, inputIndex: number = 0
   }
 }
 
-lookup(commandMap, cli);
+(async () => {
+  await config();
+  lookup(commandMap, cli);
+})();

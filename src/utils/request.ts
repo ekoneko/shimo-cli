@@ -1,5 +1,6 @@
 import fetch, { BodyInit, Request } from "node-fetch";
 import { getUserToken } from "./userData";
+const { version } = require("../../package.json");
 
 interface Headers {
   [key: string]: string;
@@ -15,7 +16,7 @@ interface RequestOptions {
 export const defaultHeaders: Headers = {
   accept: "application/vnd.shimo.v2+json",
   "cache-control": "no-cache",
-  "user-agent": "SOS/1.3.28",
+  "user-agent": `shimo-cli/${version}`,
   "content-type": "application/json",
 };
 
