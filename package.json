@@ -1,6 +1,6 @@
 {
   "name": "shimo-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A cli tool for shimo api.",
   "main": "./lib/index.js",
   "bin": {
@@ -42,6 +42,7 @@
     "cli.js"
   ],
   "keywords": [],
+  "homepage": "https://github.com/ekoneko/shimo-cli",
   "author": "",
   "license": "UNLICENSED"
 }

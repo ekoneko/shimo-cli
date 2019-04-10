@@ -1,6 +1,6 @@
 # Shimo CLI
 
-A cli tool for shimo api.
+A cli tool for [shimo](https://shimo.im)
 
 It works both on cli and other clients(as node modules).
 

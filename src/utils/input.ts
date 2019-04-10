@@ -11,7 +11,7 @@ export async function ask(label: string, hiddenInput = false) {
       process.stdin.setRawMode!(true);
     }
     let resultString = "";
-    process.stdin.resume().on("data", (result: Buffer) => {
+    function listenInput(result: Buffer) {
       if (hiddenInput) {
         const char = result.toString("utf8");
         switch (char) {
@@ -20,6 +20,7 @@ export async function ask(label: string, hiddenInput = false) {
           case "\u0004": {
             process.stdin.setRawMode!(false);
             process.stdin.pause();
+            process.stdin.off("data", listenInput);
             process.stdout.write("\n");
             resolve(resultString);
             break;
@@ -27,6 +28,7 @@ export async function ask(label: string, hiddenInput = false) {
           case "\u0003": {
             process.stdin.setRawMode!(false);
             process.stdin.pause();
+            process.stdin.off("data", listenInput);
             process.stdout.write("\n^C");
             process.exit();
           }
@@ -36,9 +38,11 @@ export async function ask(label: string, hiddenInput = false) {
         }
       } else {
         process.stdin.pause();
-        resolve(result.toString());
+        process.stdin.off("data", listenInput);
+        resolve(result.toString().replace(/\n$/, ""));
       }
-    });
+    }
+    process.stdin.resume().on("data", listenInput);
   });
 }
 
