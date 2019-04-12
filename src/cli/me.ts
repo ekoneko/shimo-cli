@@ -9,5 +9,5 @@ export const command = async (cli: Result) => {
   const userInfo = await user.info();
   const key = cli.input[1];
   const result = key ? get(userInfo, key, "") : userInfo;
-  process.stdout.write(format(result, cli.flags.format));
+  format(result, cli.flags.format);
 };

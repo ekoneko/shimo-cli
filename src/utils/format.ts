@@ -1,9 +1,10 @@
 import { toPairs, toArray, values } from "lodash";
+import { display } from "./Table";
 
 export enum FormatType {
   TEXT = "text",
   JSON = "json",
-  TABLE = "oneline",
+  ONELINE = "oneline",
 }
 
 const TextPaddingSpaceCount = 2;
@@ -37,7 +38,7 @@ function formatText(data: any, level = 0) {
   return result;
 }
 
-function formatTable(data: any) {
+function formatOneline(data: any, stdout = process.stdout) {
   const arrayData = toArray(data);
   if (!arrayData[0]) {
     return "";
@@ -45,32 +46,35 @@ function formatTable(data: any) {
     return arrayData.join("\n");
   } else if (typeof arrayData[0] === "object") {
     const keys = Object.keys(arrayData[0]);
-    const result = arrayData.map((item) => {
-      return keys
-        .reduce<string[]>((pre, cur) => {
-          pre.push(
-            ["string", "number"].includes(typeof item[cur])
-              ? item[cur]
-              : values(item[cur]).join(" "),
-          );
-          return pre;
-        }, [])
-        .join("\t");
+    const table = arrayData.map((item) => {
+      return keys.reduce<string[]>((pre, cur) => {
+        pre.push(
+          ["string", "number"].includes(typeof item[cur]) ? item[cur] : values(item[cur]).join(" "),
+        );
+        return pre;
+      }, []);
     });
-    return result.join("\n");
+    return display(table, stdout);
   } else {
-    return "";
+    stdout.write("\n");
   }
 }
 
-export function format(data: any, type: FormatType) {
+export function format(data: any, type: FormatType, stdout = process.stdout) {
   switch (type) {
-    case FormatType.JSON:
-      return JSON.stringify(data);
-    case FormatType.TABLE:
-      return formatTable(data);
+    case FormatType.JSON: {
+      const result = JSON.stringify(data);
+      stdout.write(result + "\n");
+      break;
+    }
+    case FormatType.ONELINE: {
+      formatOneline(data, stdout);
+      break;
+    }
     case FormatType.TEXT:
-    default:
-      return formatText(data);
+    default: {
+      const result = formatText(data);
+      stdout.write(result + "\n");
+    }
   }
 }

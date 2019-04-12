@@ -27,7 +27,7 @@ shimo-cli me
 
 - [x] Create / Delete File
 
-- [x] Import words, excel, etc
+- [x] Import words, excels, etc
 
 - [x] Export file from shimo to disk
 

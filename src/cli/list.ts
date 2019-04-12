@@ -56,5 +56,5 @@ export const command = async (cli: Result) => {
     ? (cli.flags.fields as string).split(",")
     : DEFAULT_FIELDS;
   const result = files.map((file) => pick(file, fields));
-  process.stdout.write(format(result, cli.flags.format) + "\n");
+  format(result, cli.flags.format);
 };

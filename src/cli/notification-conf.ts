@@ -17,6 +17,6 @@ export const command = async (cli: Result) => {
     case "list":
     default:
       const result = await notification.getConf();
-      process.stdout.write(format(result, cli.flags.format));
+      format(result, cli.flags.format);
   }
 };

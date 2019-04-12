@@ -35,7 +35,7 @@ async function searchOnce(cli: Result, keywords: string, limit: number, params?:
     ? (cli.flags.fields as string).split(",")
     : DEFAULT_FIELDS;
   const result = files.map((file) => pick(file, fields));
-  process.stdout.write(format(result, cli.flags.format) + "\n");
+  format(result, cli.flags.format);
 
   if (nextParams) {
     const needMore = await more();
