@@ -30,6 +30,7 @@ async function initConf(homePath: string) {
     "APP_URL=https://shimo.im",
     "API_URL=https://shimo.im/lizard-api",
     "WS_URL=wss://ws.shimo.im",
+    "CONTENT_HEADER_META_PREFIX=x-oss-meta-",
     `USER_DATA=${userData}`,
   ].join("\n");
   mkdirpSync(defaultUserData);

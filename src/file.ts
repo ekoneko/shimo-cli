@@ -1,6 +1,6 @@
 import * as qs from "querystring";
 import { request } from "./utils/request";
-import { File } from "./types";
+import { File, FileWithContentUrl } from "./types";
 
 // type: string, folder: string = "0", content?: string
 interface CreateFileParams {
@@ -46,12 +46,15 @@ export async function deleteFile(guid: string) {
 
 export async function getFileInfo(guid: string) {
   const url = `${process.env.API_URL}/files/${guid}`;
+  const params = qs.stringify({
+    contentUrl: "true",
+  });
   const res = await request({
-    url,
+    url: `${url}?${params}`,
     method: "GET",
   });
   if (res.ok) {
-    const result: File = await res.json();
+    const result: FileWithContentUrl = await res.json();
     return result;
   } else {
     throw new Error(`Request failed ${res.status} ${res.statusText}`);

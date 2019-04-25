@@ -23,6 +23,8 @@ shimo-cli me
 
 - [x] File List (Dashboard / Desktop / Favorites / Shortcuts etc)
 
+- [x] Output File content(It will output an unreadable text content which works for other tools)
+
 - [x] Search File
 
 - [x] Create / Delete File

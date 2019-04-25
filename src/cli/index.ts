@@ -8,6 +8,7 @@ import * as search from "./search";
 import * as open from "./open";
 import * as fileCreate from "./file-create";
 import * as fileDelete from "./file-delete";
+import * as fileContent from "./file-content";
 import * as importFile from "./import";
 import * as exportFile from "./export";
 
@@ -23,6 +24,7 @@ export default [
   search,
   fileCreate,
   fileDelete,
+  fileContent,
   importFile,
   exportFile,
 ];

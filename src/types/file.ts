@@ -11,3 +11,7 @@ export interface File {
   type: string;
   parentId: number;
 }
+
+export interface FileWithContentUrl extends File {
+  contentUrl: string;
+}
