@@ -29,6 +29,10 @@ const cli = meow(description.join("\n\n"), {
       type: "string",
       default: "text",
     },
+    force: {
+      type: "boolean",
+      alias: "f",
+    },
   },
 });
 

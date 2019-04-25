@@ -1,4 +1,5 @@
 import * as login from "./login";
+import * as logout from "./logout";
 import * as me from "./me";
 import * as notificationConf from "./notification-conf";
 import * as notificationWatch from "./notification-watch";
@@ -13,6 +14,7 @@ import * as exportFile from "./export";
 // Order for compose help text
 export default [
   login,
+  logout,
   open,
   me,
   notificationConf,

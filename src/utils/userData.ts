@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { debug } from "util";
+import * as rimraf from "rimraf";
 import { v1 } from "uuid";
 
 export function getUserData() {
@@ -8,6 +8,11 @@ export function getUserData() {
     return process.env.USER_DATA!;
   }
   return path.join(process.cwd(), process.env.USER_DATA!);
+}
+
+export function removeUserData() {
+  const userDataPath = getUserData();
+  rimraf.sync(userDataPath);
 }
 
 export function setUserToken(token: string) {
