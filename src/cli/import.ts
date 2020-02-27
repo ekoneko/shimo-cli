@@ -18,7 +18,7 @@ export const command = async (cli: Result) => {
 };
 
 function getType(fileExt: string): string {
-  if ([".doc", ".docx"].includes(fileExt)) {
+  if ([".doc", ".docx", ".md"].includes(fileExt)) {
     return "newdoc";
   } else if ([".xlsx"].includes(fileExt)) {
     return "sheet";
