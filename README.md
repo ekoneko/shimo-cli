@@ -11,8 +11,18 @@ Before use `shimo-cli`, you should get `APP_CLIENT_ID` and `APP_CLIENT_SECRET` f
 ```shell
 npm i -g shimo-cli
 shimo-cli # initialize config at first running
-shimo-cli login
+shimo-cli login [--with-cookie]
 shimo-cli me
+```
+
+### Login
+
+Now login shimo always trigger a captcha. Shimo-cli can't support captcha easily.
+
+You can get shimo auth cookie (shimo_sid) from browser and login with the cookie manually. e.g:
+
+```shell
+shimo cli login shimo_sid=xxxxx --with-cookie
 ```
 
 ## Features

@@ -1,5 +1,5 @@
 import fetch, { BodyInit, Request } from "node-fetch";
-import { getUserToken } from "./userData";
+import { getUserToken, PREFIX_COOKIE } from "./userData";
 const { version } = require("../../package.json");
 
 interface Headers {
@@ -24,7 +24,15 @@ export async function request(options: RequestOptions, withToken = true) {
   const headers = options.headers || defaultHeaders;
   if (withToken) {
     const token = getUserToken();
-    headers.Authorization = `Bearer ${token}`;
+    if (token.startsWith(PREFIX_COOKIE)) {
+      const cookie = token.replace(PREFIX_COOKIE, '')
+      headers['Cookie'] = cookie
+      headers['x-requested-with'] = 'XmlHttpRequest'
+      headers['referer'] = options.url
+      headers['origin'] = options.url
+    } else {
+      headers.Authorization = `Bearer ${token}`;
+    }
   }
   return fetch(options.url, {
     method: options.method,

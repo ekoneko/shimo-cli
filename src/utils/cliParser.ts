@@ -15,6 +15,14 @@ export async function parseAuthInfo(cli: Result): Promise<AuthInfo> {
   };
 }
 
+export async function parseCookie(cli: Result): Promise<string> {
+  const cookie = cli.input[1] || await ask("Input cookie name and value(like shimo_sid=xxxx):")
+  if (!cookie.includes('=')) {
+    throw new Error('Cookie format not match')
+  }
+  return cookie
+}
+
 export function parseLimit(cli: Result, defaultValue: number, max: number, min = 1) {
   const limit = parseInt(cli.flags.limit, 10) || defaultValue;
   return Math.max(min, Math.min(max, limit));

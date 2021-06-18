@@ -4,7 +4,10 @@ import { requestContent } from "../utils/fileContent";
 import { format } from "../utils/format";
 
 export const name = ["file", "content"];
-export const description = ["output file content"].join("\n\t");
+export const description = [
+  "output file content",
+  "--content-only"
+].join("\n\t");
 
 export const command = async (cli: Result) => {
   if (!cli.input[2]) {

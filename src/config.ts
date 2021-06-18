@@ -4,6 +4,7 @@ import { homedir } from "os";
 import * as dotenv from "dotenv";
 import { sync as mkdirpSync } from "mkdirp";
 import { ask } from "./utils/input";
+import { format, FormatType } from './utils/format'
 
 const VERSION = "1";
 
@@ -24,7 +25,7 @@ function createGenerateConfLine(created = false) {
   return async (name: string, value: string, askMode = false, askDefaultValue?: string) => {
     if (created || !process.env[name]) {
       if (askMode) {
-        const tip = name + askDefaultValue ? `(${askDefaultValue}):` : ":";
+        const tip = name + (askDefaultValue ? `(${askDefaultValue})` : "") + ':';
         return ((await ask(tip)) || askDefaultValue) as string;
       }
       return value;
@@ -72,7 +73,8 @@ async function initConf(homePath: string) {
   const template = await generateConf(true);
   mkdirpSync(template.USER_DATA);
   fs.writeFileSync(homePath, configToString(template));
-  process.stdout.write(`\nHere is your config (in ${homePath})\n${template}\n`);
+  process.stdout.write(`\nHere is your config (in ${homePath}):\n`);
+  format(template, FormatType.TEXT)
   process.stdout.write(
     "The session will exit. You can redo your command or modify your config manually\n",
   );

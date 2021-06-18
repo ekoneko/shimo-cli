@@ -1,4 +1,4 @@
-import { setUserToken } from "./utils/userData";
+import { setUserToken, setUserCookie } from "./utils/userData";
 import { request } from "./utils/request";
 import { User } from "./types";
 
@@ -25,6 +25,10 @@ export async function loginWithPassword(username: string, password: string) {
   } else {
     throw new Error("Login failed");
   }
+}
+
+export async function loginWithCookie(cookie: string) {
+  setUserCookie(cookie);
 }
 
 // TODO: other login ways, eg: wechat, dingtalk...

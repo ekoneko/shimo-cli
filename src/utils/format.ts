@@ -1,5 +1,5 @@
 import { toPairs, toArray, values } from "lodash";
-import { display } from "./Table";
+import { display } from "./table";
 
 export enum FormatType {
   TEXT = "text",

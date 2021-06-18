@@ -3,6 +3,8 @@ import * as path from "path";
 import * as rimraf from "rimraf";
 import { v1 } from "uuid";
 
+export const PREFIX_COOKIE = '$Cookie:'
+
 export function getUserData() {
   if (path.isAbsolute(process.env.USER_DATA!)) {
     return process.env.USER_DATA!;
@@ -31,6 +33,12 @@ export function getUserToken() {
     .readFileSync(tokenPath)
     .toString()
     .trim();
+}
+
+export function setUserCookie(cookie: string) {
+  const userData = getUserData();
+  const tokenPath = path.join(userData, "token");
+  fs.writeFileSync(tokenPath, `${PREFIX_COOKIE}${cookie}`);
 }
 
 export function readConf(name: string) {
