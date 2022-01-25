@@ -3,7 +3,8 @@ import { getUserData, removeUserData } from "../utils/userData";
 
 export const name = "logout";
 export const description = "logout";
-export const command = async (cli: Result) => {
+export const flags = <const>{};
+export const command = async (cli: Result<typeof flags>) => {
   const userDataPath = getUserData();
   try {
     if (cli.flags.force) {

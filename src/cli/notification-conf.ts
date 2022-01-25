@@ -1,6 +1,6 @@
 import { Result } from "meow";
 import * as notification from "../notification";
-import { format } from "../utils/format";
+import { format, FormatType } from "../utils/format";
 
 export const name = ["notification", "conf"];
 export const description = [
@@ -8,7 +8,8 @@ export const description = [
   "shimo-cli notification conf list\tget notification config list",
   "shimo-cli notification conf set \tset notification config list",
 ].join("\n\t");
-export const command = async (cli: Result) => {
+export const flags = <const>{};
+export const command = async (cli: Result<typeof flags>) => {
   const subCommand = cli.input[2].toLocaleLowerCase();
   switch (subCommand) {
     case "set":
@@ -17,6 +18,6 @@ export const command = async (cli: Result) => {
     case "list":
     default:
       const result = await notification.getConf();
-      format(result, cli.flags.format);
+      format(result, cli.flags.format as FormatType);
   }
 };

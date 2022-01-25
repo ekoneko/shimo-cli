@@ -6,7 +6,8 @@ export const description = [
   "open shimo homepage or file page in browser",
   "shimo-cli open [guid]",
 ].join("\n\t");
-export const command = async (cli: Result) => {
+export const flags = {};
+export const command = async (cli: Result<typeof flags>) => {
   open(getPage(cli.input[1]));
 };
 

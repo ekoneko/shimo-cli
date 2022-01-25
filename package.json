@@ -11,7 +11,7 @@
     "download": "^7.1.0",
     "form-data": "^2.3.3",
     "lodash": "^4.17.21",
-    "meow": "^5.0.0",
+    "meow": "^9.0.0",
     "mkdirp": "^1.0.4",
     "node-fetch": "^2.6.7",
     "node-notifier": "^5.4.0",
@@ -25,7 +25,6 @@
     "@types/download": "^6.2.4",
     "@types/form-data": "^2.2.1",
     "@types/lodash": "^4.14.123",
-    "@types/meow": "^5.0.0",
     "@types/mkdirp": "^0.5.2",
     "@types/node-fetch": "^2.1.7",
     "@types/node-notifier": "^5.4.0",
@@ -34,7 +33,7 @@
     "@types/socket.io-client": "^1.4.32",
     "@types/uuid": "^3.4.4",
     "ts-node": "^8.0.3",
-    "typescript": "^3.3.4000"
+    "typescript": "^4.5.5"
   },
   "scripts": {
     "start": "NODE_ENV=development npm run start-cli",

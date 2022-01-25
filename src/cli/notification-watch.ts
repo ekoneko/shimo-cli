@@ -4,7 +4,8 @@ import * as notification from "../notification";
 
 export const name = ["notification", "watch"];
 export const description = "Watch notification";
-export const command = async (cli: Result) => {
+export const flags = <const>{};
+export const command = async (cli: Result<typeof flags>) => {
   const socket = new Socket();
   const client = socket.client;
   try {

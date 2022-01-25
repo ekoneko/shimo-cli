@@ -19,7 +19,7 @@ const DEFAULT_FIELDS = ["guid", "name", "createdAt", "updatedAt", "user.name"];
 const MAX_LIMIT = 150;
 const DEFAULT_LIMIT = 20;
 
-async function getFiles(category: string, cli: Result) {
+async function getFiles(category: string, cli: Result<typeof flags>) {
   const limit = parseLimit(cli, DEFAULT_LIMIT, MAX_LIMIT, 1);
   const from = parseFrom(cli);
   switch (category) {
@@ -46,15 +46,30 @@ export const name = ["list"];
 export const description = [
   "display file list from desktop or folder",
   "shimo-cli list [desktop|updated|used|created|shared|starred|shortcuts|trash|$guid]",
-  `--format\tdisplay format(${Object.values(FormatType).join('|')})`,
-  "--fields\tfields filter, split by comma(guid|name|createdAt|updatedAt|updatedUser|type)",
+  `--format\tdisplay format(${Object.values(FormatType).join("|")})`,
+  "--fields\tfields filter, split by comma(guidname|createdAt|updatedAt|updatedUser|type)",
   "--limit \tset return line count",
 ].join("\n\t");
-export const command = async (cli: Result) => {
+export const flags = <const>{
+  format: {
+    type: "string",
+    default: "text",
+  },
+  fields: {
+    type: "string",
+  },
+  from: {
+    type: "number",
+  },
+  limit: {
+    type: "string",
+  },
+};
+export const command = async (cli: Result<typeof flags>) => {
   const files = await getFiles(cli.input[1], cli);
   const fields: string[] = cli.flags.fields
     ? (cli.flags.fields as string).split(",")
     : DEFAULT_FIELDS;
   const result = files.map((file) => pick(file, fields));
-  format(result, cli.flags.format);
+  format(result, cli.flags.format as FormatType);
 };

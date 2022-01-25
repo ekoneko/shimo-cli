@@ -3,6 +3,7 @@ import { deleteFile } from "../file";
 
 export const name = ["file", "delete"];
 export const description = ["Delete selected file", "shimo-cli file delete $guid"].join("\n\t");
+export const flags = {};
 
 async function removeMultipleFile(guids: string[]) {
   const tasks: string[][] = [];
@@ -13,7 +14,7 @@ async function removeMultipleFile(guids: string[]) {
   await Promise.all(handlers);
 }
 
-export const command = async (cli: Result) => {
+export const command = async (cli: Result<typeof flags>) => {
   if (!cli.input[2]) {
     process.stdout.write("No file to delete");
     process.exit();

@@ -13,11 +13,23 @@ export const name = ["search"];
 export const description = [
   "search file",
   "shimo-cli search $keyword",
-  `--format\tdisplay format(${Object.values(FormatType).join('|')})`,
+  `--format\tdisplay format(${Object.values(FormatType).join("|")})`,
   "--fields\tfields filter, split by comma",
   "--limit \tset return line count",
 ].join("\n\t");
-export const command = async (cli: Result) => {
+export const flags = <const>{
+  format: {
+    type: "string",
+    default: "text",
+  },
+  fields: {
+    type: "string",
+  },
+  limit: {
+    type: "string",
+  },
+};
+export const command = async (cli: Result<typeof flags>) => {
   const keywords = cli.input[1];
   const limit = parseLimit(cli, DEFAULT_LIMIT, MAX_LIMIT);
   if (!keywords) {
@@ -27,15 +39,18 @@ export const command = async (cli: Result) => {
   await searchOnce(cli, keywords, limit);
 };
 
-async function searchOnce(cli: Result, keywords: string, limit: number, params?: string) {
+async function searchOnce(
+  cli: Result<typeof flags>,
+  keywords: string,
+  limit: number,
+  params?: string,
+) {
   process.stdout.write("Searching...\n");
   const { nextParams, files } = await search(keywords, limit, params);
   clearLine();
-  const fields: string[] = cli.flags.fields
-    ? (cli.flags.fields as string).split(",")
-    : DEFAULT_FIELDS;
+  const fields = cli.flags.fields ? cli.flags.fields.split(",") : DEFAULT_FIELDS;
   const result = files.map((file) => pick(file, fields));
-  format(result, cli.flags.format);
+  format(result, cli.flags.format as FormatType);
 
   if (nextParams) {
     const needMore = await more();

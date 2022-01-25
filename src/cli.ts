@@ -3,8 +3,10 @@ import { config } from "./config";
 import cliTasks from "./cli/index";
 import { get, set } from "lodash";
 
+const flags = {};
+
 interface CommandMap {
-  [key: string]: (cli: meow.Result) => void | CommandMap;
+  [key: string]: (cli: meow.Result<typeof flags>) => void | CommandMap;
 }
 
 const commandMap: CommandMap = {};
@@ -21,6 +23,7 @@ cliTasks.forEach((task) => {
     throw new Error(`Don't over write cli name(${task.name}).`);
   }
   set(commandMap, task.name, task.command);
+  Object.assign(flags, task.flags);
 });
 
 const cli = meow(description.join("\n\n"), {
@@ -36,7 +39,7 @@ const cli = meow(description.join("\n\n"), {
   },
 });
 
-function lookup(commandMap: CommandMap, cli: meow.Result, inputIndex: number = 0) {
+function lookup(commandMap: CommandMap, cli: meow.Result<typeof flags>, inputIndex: number = 0) {
   const input = cli.input[inputIndex] || "default";
   if (!commandMap[input]) {
     if (cli.input.length > 1) {
@@ -51,7 +54,7 @@ function lookup(commandMap: CommandMap, cli: meow.Result, inputIndex: number = 0
       console.error(err);
     }
   } else {
-    lookup((commandMap[input] as any) as CommandMap, cli, inputIndex + 1);
+    lookup(commandMap[input] as any as CommandMap, cli, inputIndex + 1);
   }
 }
 

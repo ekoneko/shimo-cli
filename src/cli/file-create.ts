@@ -9,10 +9,21 @@ export const description = [
   "create a file",
   "shimo-cli file create $name",
   "--folder $guid",
-  `--type (${Object.values(FileTypeMap).filter(fileType => fileType.id <= 1).map(fileType => `${fileType.id}:${fileType.name}`).join(' ')})`,
+  `--type (${Object.values(FileTypeMap)
+    .filter((fileType) => fileType.id <= 1)
+    .map((fileType) => `${fileType.id}:${fileType.name}`)
+    .join(" ")})`,
   "--content if set this flag, it will call your default editor to input content(raw delta string)",
 ].join("\n\t");
-export const command = async (cli: Result) => {
+export const flags = <const>{
+  type: {
+    type: "string",
+  },
+  content: {
+    type: "boolean",
+  },
+};
+export const command = async (cli: Result<typeof flags>) => {
   const type = cli.flags.type;
   const name = cli.input[2];
   const folder = parseFolder(cli);

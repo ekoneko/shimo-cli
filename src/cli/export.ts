@@ -11,6 +11,11 @@ export const description = [
   "shimo-cli export $guid $localPath",
   "--type export as docx|pdf|jpg|md default is docx",
 ].join("\n\t");
+export const flags = <const>{
+  type: {
+    type: "string",
+  },
+};
 
 const allowedTypes = ["docx", "pdf", "jpg", "md"];
 
@@ -31,7 +36,7 @@ async function checkFile(exportDir: string, type: "file" | "dir") {
 }
 
 function downloadFile(downloadUrl: string, localPath: string) {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     download(downloadUrl)
       .on("response", (res) => {
         const total = +res.headers["content-length"];
@@ -54,7 +59,7 @@ function downloadFile(downloadUrl: string, localPath: string) {
   });
 }
 
-export const command = async (cli: Result) => {
+export const command = async (cli: Result<typeof flags>) => {
   const guid = cli.input[1];
   const exportPath = cli.input[2];
   const exportDir = path.parse(exportPath).dir;
