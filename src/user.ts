@@ -42,6 +42,9 @@ export async function info() {
     const result: User = await res.json();
     return result;
   } else {
+    if ([404, 401].includes(res.status)) {
+      throw new Error(`Request failed ${res.status} not auth`);
+    }
     throw new Error(`Request failed ${res.status} ${res.statusText}`);
   }
 }

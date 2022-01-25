@@ -2,7 +2,7 @@ import { Result } from "meow";
 import { pick } from "lodash";
 import { search } from "../search";
 import { parseLimit } from "../utils/cliParser";
-import { format } from "../utils/format";
+import { format, FormatType } from "../utils/format";
 import { more, clearLine } from "../utils/input";
 
 const DEFAULT_LIMIT = 12;
@@ -13,7 +13,7 @@ export const name = ["search"];
 export const description = [
   "search file",
   "shimo-cli search $keyword",
-  "--format\tdisplay format",
+  `--format\tdisplay format(${Object.values(FormatType).join('|')})`,
   "--fields\tfields filter, split by comma",
   "--limit \tset return line count",
 ].join("\n\t");

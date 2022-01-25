@@ -9,6 +9,7 @@ export const description = [
   "create a file",
   "shimo-cli file create $name",
   "--folder $guid",
+  `--type (${Object.values(FileTypeMap).filter(fileType => fileType.id <= 1).map(fileType => `${fileType.id}:${fileType.name}`).join(' ')})`,
   "--content if set this flag, it will call your default editor to input content(raw delta string)",
 ].join("\n\t");
 export const command = async (cli: Result) => {

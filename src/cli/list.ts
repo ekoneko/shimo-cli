@@ -10,7 +10,7 @@ import {
   getShortcuts,
   getTrash,
 } from "../list";
-import { format } from "../utils/format";
+import { format, FormatType } from "../utils/format";
 import { parseLimit, parseFrom } from "../utils/cliParser";
 
 const DEFAULT_FIELDS = ["guid", "name", "createdAt", "updatedAt", "user.name"];
@@ -46,8 +46,8 @@ export const name = ["list"];
 export const description = [
   "display file list from desktop or folder",
   "shimo-cli list [desktop|updated|used|created|shared|starred|shortcuts|trash|$guid]",
-  "--format\tdisplay format",
-  "--fields\tfields filter, split by comma",
+  `--format\tdisplay format(${Object.values(FormatType).join('|')})`,
+  "--fields\tfields filter, split by comma(guid|name|createdAt|updatedAt|updatedUser|type)",
   "--limit \tset return line count",
 ].join("\n\t");
 export const command = async (cli: Result) => {
