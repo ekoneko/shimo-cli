@@ -25,6 +25,10 @@ You can get shimo auth cookie (shimo_sid) from browser and login with the cookie
 shimo cli login shimo_sid=xxxxx --with-cookie
 ```
 
+## Known issues
+
+- Import and export not works
+
 ## Features
 
 - [x] Auth and keep user status

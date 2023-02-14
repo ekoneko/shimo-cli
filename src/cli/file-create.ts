@@ -3,6 +3,7 @@ import { FileTypeMap } from "../consts/fileType";
 import { createFile } from "../file";
 import { parseFolder } from "../utils/cliParser";
 import { getContentFromEditor } from "../utils/editor";
+import { readStream } from "../utils/input";
 
 export const name = ["file", "create"];
 export const description = [
@@ -14,6 +15,7 @@ export const description = [
     .map((fileType) => `${fileType.id}:${fileType.name}`)
     .join(" ")})`,
   "--content if set this flag, it will call your default editor to input content(raw delta string)",
+  "--stream if set this flag, it will read content from stream(raw delta string)",
 ].join("\n\t");
 export const flags = <const>{
   type: {
@@ -22,12 +24,15 @@ export const flags = <const>{
   content: {
     type: "boolean",
   },
+  stream: {
+    type: "boolean",
+  },
 };
 export const command = async (cli: Result<typeof flags>) => {
   const type = cli.flags.type;
-  const name = cli.input[2];
+  const name = cli.input[2] || "Untitled";
   const folder = parseFolder(cli);
-  if (!name || !type) {
+  if (!type) {
     process.stderr.write("Missing arguments: Need `--type` param");
     process.exit();
   }
@@ -36,12 +41,22 @@ export const command = async (cli: Result<typeof flags>) => {
     process.stderr.write("type is not allowed");
     process.exit();
   }
-  const content = cli.flags.content ? await getContentFromEditor() : undefined;
+  const content = await getContent(cli);
   const createdFile = await createFile({
     type,
     name,
     folder,
     content,
   });
-  process.stdout.write("Created " + process.env.APP_URL + createdFile.url);
+  process.stdout.write("Created " + process.env.APP_URL + createdFile.url + "\n");
 };
+
+async function getContent(cli: Result<typeof flags>) {
+  if (cli.flags.content) {
+    return getContentFromEditor();
+  }
+  if (cli.flags.stream) {
+    return readStream();
+  }
+  return undefined;
+}

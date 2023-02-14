@@ -77,3 +77,20 @@ export function clearLine() {
   readline.moveCursor(process.stdout, 0, -1);
   readline.clearLine(process.stdout, 0);
 }
+
+export function readStream() {
+  return new Promise<string>((resolve, reject) => {
+    process.stdin.resume();
+    let data = "";
+    process.stdin.on("data", (chunk) => {
+      data += chunk;
+    });
+    process.stdin.on("end", () => {
+      process.stdin.pause();
+      resolve(data.trim());
+    });
+    process.stdin.on("error", (err) => {
+      reject(err);
+    });
+  });
+}
